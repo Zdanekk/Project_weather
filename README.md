@@ -10,10 +10,12 @@
 Projekt składa się z pozyskanych danych z serwisu udostępniającego API meteorologiczne WorldWeatherOnilne. Chcemy, żeby nasz projekt działał offline. 
 
 ## Cel projektu
-Celem projektu jest utworzenie własnego serwisu przewidującego pogodę na określony przez nas kwartał roku kalendarzowego. Nasz wybrany okres to miesiące od stycznia do marca, od 2021 do 2023 roku.  
+Jak wiemy pogoda jest trudna do przewidzenia, jest w stanie zmienić się w ułamku sekundy, co jest szczególnie widoczne w ostatnich latach. Pomimo tego chcemy stworzyć aplikację przewidywania pogody. Posiadając dane historyczne chcemy, by nasza aplikacja “przewidywała” - bardziej odpowiednie byłoby użycie słowa “wydedukowała”, jak najbardziej prawdopodobną prognozę pogody w określonym przedziale czasowym. 
 
 ## Metodologia
 ### Sposób pozyskania danych
+By posiadać aktualne dane wykorzystujemy pętlę for, która dostarcza nam danych ze wskazanego przedziału czasu. Dane pozyskane w ten sposób składają się z wielu zmiennych, między innymi: zaśnieżenie, widoczność oraz średnie parametrów mierzonych o wschodzi i zachodzie słońca lub o innych określonych godzinach. Na potrzeby naszego projektu, zdecydowaliśmy się zmniejszyć liczbę zmiennych do 5.  
+
 Z pobranych danych z wybranego API wybieramy poniższe zmienne: 
 
 Temperatura – brana pod uwagę średnia z danego dnia, wyrażana w jednostce miary stopni Celsjusza (°C); dodatkowo jest brana pod uwagę najniższa temperatura w ciągu dnia – noc oraz maksymalna temperatura - dzień. 
