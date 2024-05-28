@@ -19,7 +19,7 @@ By posiadać aktualne dane wykorzystujemy pętlę for, która dostarcza nam dany
 
 Z pobranych danych z wybranego API wybieramy poniższe zmienne: 
 
-:thermomenter: Temperatura – brana pod uwagę średnia z danego dnia, wyrażana w jednostce miary stopni Celsjusza (°C); dodatkowo jest brana pod uwagę najniższa temperatura w ciągu dnia – noc oraz maksymalna temperatura - dzień. 
+Temperatura – brana pod uwagę średnia z danego dnia, wyrażana w jednostce miary stopni Celsjusza (°C); dodatkowo jest brana pod uwagę najniższa temperatura w ciągu dnia – noc oraz maksymalna temperatura - dzień. 
 
 Zachmurzenie - średnie pokrycie nieba chmurami w ciągu wyznaczonego dnia, wyrażana jest w procentach (%), gdzie 0% oznacza bezchmurne niebo, a 100% – całkowite zachmurzenie. 
 
