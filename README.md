@@ -1,4 +1,4 @@
-# Project weather "rainbow:
+# Project weather :rainbow:
 
 ## :sparkle: Team :sparkle:
 ### Poznaj nas!
