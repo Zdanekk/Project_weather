@@ -33,7 +33,17 @@ Z pobranych danych z wybranego API wybieramy poniższe zmienne:
 
 
 ## Aplikacja
+ARIMA (Autoregressive Integrated Moving Average) to jeden z najbardziej popularnych modeli statystycznych stosowanych do analizy 
+i prognozowania szeregów czasowych. Model ARIMA łączy trzy kluczowe komponenty:
 
+* Autoregressive (AR): Część autoregresyjna modelu opisuje, jak bieżące wartości serii czasowej zależą od jej przeszłych wartości. Parametr 𝑝 oznacza liczbę poprzednich wartości, które są brane pod uwagę.
+
+* Integrated (I): Część zintegrowana modelu odnosi się do różnicowania danych w celu uczynienia serii czasowej stacjonarną. Parametr 
+𝑑 wskazuje, ile razy dane muszą być zróżnicowane, aby osiągnąć stacjonarność.
+
+* Moving Average (MA): Część średniej ruchomej modelu opisuje, jak bieżące wartości serii czasowej są związane z błędami prognozowania (residuals) z przeszłości. Parametr q oznacza liczbę wcześniejszych błędów prognozy, które są brane pod uwagę.
+
+Model ARIMA jest często oznaczany jako ARIMA(p,d,q), gdzie 𝑝, 𝑑 i 𝑞 są wyżej wymienionymi parametrami.
 
 ### Wyniki
 
