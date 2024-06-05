@@ -15,7 +15,7 @@ Jak wiemy pogoda jest trudna do przewidzenia, jest w stanie zmienić się w uła
 
 ## Metodologia :open_umbrella:
 ### Sposób pozyskania danych :page_with_curl:
-By posiadać aktualne dane wykorzystujemy pętlę for, która dostarcza nam danych ze wskazanego przedziału czasu. Dane pozyskane w ten sposób składają się z wielu zmiennych, między innymi: zaśnieżenie, widoczność oraz średnie parametrów mierzonych o wschodzi i zachodzie słońca lub o innych określonych godzinach. Na potrzeby naszego projektu, zdecydowaliśmy się zmniejszyć liczbę zmiennych do 5.  
+By posiadać aktualne dane wykorzystujemy pętlę for, która dostarcza nam danych ze wskazanego przedziału czasu. Dane pozyskane w ten sposób składają się z wielu zmiennych, między innymi: zaśnieżenie, widoczność oraz średnie parametrów mierzonych o wschodzi i zachodzie słońca lub o innych określonych godzinach. Na potrzeby naszego projektu, zdecydowaliśmy się zmniejszyć pobieraną liczbę zmiennych do 5.  
 
 Z pobranych danych z wybranego API wybieramy poniższe zmienne: 
 
@@ -29,21 +29,15 @@ Z pobranych danych z wybranego API wybieramy poniższe zmienne:
 
 * Ciśnienie - to siła, jaką wywiera powietrze na jednostkę powierzchni, mierzona jest w hektopaskalach (hPa). 
 
-### Wykorzystane metody :speech_balloon:
+Postanowiliśmy skupić się na jednej zmiennej, która wydaje nam się być najbardziej istotną, czyli temperaturę.
 
+### Wykorzystane metody :speech_balloon:
+W trakcie tworzenia naszego projektu wykorzystaliśmy model statystyczny ARIMA -  AutoRegressive Integrated Moving Average. Pozwolił on nam na przeanalizowanie danych historycznych i na ich podstawie sprognozował pogode na wyznaczony przez nas okres czasu. 
+
+Konkretniej model ARIMA prognozuje szeregi czasowe, które sa danymi rejestrowanymi, obserwowanymi lub mierzonymi w równych odstępach czasu (sezonowość). W naszym przypadku jest to rejestracja średniej temperatury w ciągu dnia, która następnie jest uśredniana dla danego miesiąca od 2018 do 2023 roku.
 
 ## Aplikacja :iphone:
-ARIMA (Autoregressive Integrated Moving Average) to jeden z najbardziej popularnych modeli statystycznych stosowanych do analizy 
-i prognozowania szeregów czasowych. Model ARIMA łączy trzy kluczowe komponenty:
 
-* Autoregressive (AR): Część autoregresyjna modelu opisuje, jak bieżące wartości serii czasowej zależą od jej przeszłych wartości. Parametr 𝑝 oznacza liczbę poprzednich wartości, które są brane pod uwagę.
-
-* Integrated (I): Część zintegrowana modelu odnosi się do różnicowania danych w celu uczynienia serii czasowej stacjonarną. Parametr 
-𝑑 wskazuje, ile razy dane muszą być zróżnicowane, aby osiągnąć stacjonarność.
-
-* Moving Average (MA): Część średniej ruchomej modelu opisuje, jak bieżące wartości serii czasowej są związane z błędami prognozowania (residuals) z przeszłości. Parametr q oznacza liczbę wcześniejszych błędów prognozy, które są brane pod uwagę.
-
-Model ARIMA jest często oznaczany jako ARIMA(p,d,q), gdzie 𝑝, 𝑑 i 𝑞 są wyżej wymienionymi parametrami.
 
 ### Wyniki :1st_place_medal:
 
