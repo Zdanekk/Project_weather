@@ -1,20 +1,20 @@
 # Project weather :rainbow:
 
-## :sparkle: Team :sparkle:
+## Team :sparkle:
 ### Poznaj nas!
 - Bartosz Bukański
 - Malwina Koziarska
 - Kornelia Neugebauer
 - Jan Zdaniewicz
 
-## :scroll: Wstęp do problematyki :scroll:
+## Wstęp do problematyki :scroll:
 Projekt składa się z pozyskanych danych z serwisu udostępniającego API meteorologiczne WorldWeatherOnilne. Chcemy, żeby nasz projekt działał offline. 
 
-## :dart: Cel projektu :dart:
+## Cel projektu :dart:
 Jak wiemy pogoda jest trudna do przewidzenia, jest w stanie zmienić się w ułamku sekundy, co jest szczególnie widoczne w ostatnich latach. Pomimo tego chcemy stworzyć aplikację przewidywania pogody. Posiadając dane historyczne chcemy, by nasza aplikacja “przewidywała” - bardziej odpowiednie byłoby użycie słowa “wydedukowała”, jak najbardziej prawdopodobną prognozę pogody w określonym przedziale czasowym. 
 
-## :closed_umbrella: Metodologia :open_umbrella:
-### :pencil: Sposób pozyskania danych :page_with_curl:
+## Metodologia :open_umbrella:
+### Sposób pozyskania danych :page_with_curl:
 By posiadać aktualne dane wykorzystujemy pętlę for, która dostarcza nam danych ze wskazanego przedziału czasu. Dane pozyskane w ten sposób składają się z wielu zmiennych, między innymi: zaśnieżenie, widoczność oraz średnie parametrów mierzonych o wschodzi i zachodzie słońca lub o innych określonych godzinach. Na potrzeby naszego projektu, zdecydowaliśmy się zmniejszyć liczbę zmiennych do 5.  
 
 Z pobranych danych z wybranego API wybieramy poniższe zmienne: 
@@ -29,10 +29,10 @@ Z pobranych danych z wybranego API wybieramy poniższe zmienne:
 
 * Ciśnienie - to siła, jaką wywiera powietrze na jednostkę powierzchni, mierzona jest w hektopaskalach (hPa). 
 
-### Wykorzystanie metody
+### Wykorzystane metody :speech_balloon:
 
 
-## Aplikacja
+## Aplikacja :iphone:
 ARIMA (Autoregressive Integrated Moving Average) to jeden z najbardziej popularnych modeli statystycznych stosowanych do analizy 
 i prognozowania szeregów czasowych. Model ARIMA łączy trzy kluczowe komponenty:
 
@@ -45,13 +45,13 @@ i prognozowania szeregów czasowych. Model ARIMA łączy trzy kluczowe komponent
 
 Model ARIMA jest często oznaczany jako ARIMA(p,d,q), gdzie 𝑝, 𝑑 i 𝑞 są wyżej wymienionymi parametrami.
 
-### Wyniki
+### Wyniki :1st_place_medal:
 
 
-### Opis działania API
+### Opis działania API :lab_coat:
 
 
-## Dyskusja
+## Dyskusja :lips:
 
 
-## Wnioski
+## Wnioski :fireworks:
