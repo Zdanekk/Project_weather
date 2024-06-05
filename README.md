@@ -36,9 +36,9 @@ W trakcie tworzenia naszego projektu wykorzystaliśmy model statystyczny ARIMA -
 
 Konkretniej model ARIMA prognozuje szeregi czasowe, które sa danymi rejestrowanymi, obserwowanymi lub mierzonymi w równych odstępach czasu (sezonowość). W naszym przypadku jest to rejestracja średniej temperatury w ciągu dnia, która następnie jest uśredniana dla danego miesiąca od 2018 do 2023 roku.
 
+W celu analizy naszych danych wykorzystujemy bibliotekę "pmdarima" i zawartą w niej funkcję "pm.auto_arima()", gdzie zmienna m przyjmuje stałą wartość równą 12. Co wskazuje na nasz zamiar prognozowania pogody po miesiącach.
+
 ## Aplikacja :iphone:
-
-
 ### Wyniki :1st_place_medal:
 
 
