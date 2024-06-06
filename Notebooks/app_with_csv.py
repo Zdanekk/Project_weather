@@ -6,11 +6,11 @@ from sklearn.metrics import mean_squared_error
 
 app = Flask(__name__)
 
+df = pd.read_csv("../data/weather_data.csv")
+
 @app.route('/weather_forecast', methods=['GET'])
 def weather_forecast():
-    try:
-        df = pd.read_csv("../data/weather_data.csv")
-        
+    try:   
         df['date'] = pd.to_datetime(df['date'])
         df.set_index('date', inplace=True)
         df['avgtempC'] = df['avgtempC'].astype(int)
@@ -25,7 +25,6 @@ def weather_forecast():
         forecast = pd.DataFrame(forecast, index=test_df.index, columns=['Prediction'])
         error = mean_squared_error(test_df, forecast)
         
-        # Convert index to string before returning as JSON
         forecast.index = forecast.index.strftime('%Y-%m-%d')
         
         result = {
