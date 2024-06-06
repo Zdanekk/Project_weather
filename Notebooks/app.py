@@ -7,7 +7,7 @@ from sklearn.metrics import mean_squared_error
 
 app = Flask(__name__)
 
-def generate_weather_api_urls(api_key, location, years_back=3):
+def generate_weather_api_urls(api_key, location, years_back=6):
     base_url = "http://api.worldweatheronline.com/premium/v1/past-weather.ashx"
     urls = []
 
@@ -58,20 +58,30 @@ def extract_weather_data(weather_data):
     
     return extracted_data
 
+
 @app.route('/weather_forecast', methods=['GET'])
-def weather_forecast():
+def weather_forecast():    
     api_key = request.args.get('api_key', '4597174352ee463084a193409241305')
     location = request.args.get('location', 'London')
-    
+
     urls = generate_weather_api_urls(api_key, location)
     all_weather_data = []
 
     for url in urls:
         response = requests.get(url)
         data = response.json()
-        weather_data = data["data"]["weather"]
-        month_weather_data = extract_weather_data(weather_data)
-        all_weather_data.extend(month_weather_data)
+        
+        # Sprawdzenie, czy odpowiedź zawiera klucz 'weather'
+        if 'data' in data and 'weather' in data['data']:
+            weather_data = data["data"]["weather"]
+            month_weather_data = extract_weather_data(weather_data)
+            all_weather_data.extend(month_weather_data)
+        else:
+            return jsonify({"error": "Błąd w odpowiedzi API dla URL: {}".format(url)}), 400
+
+    if not all_weather_data:
+        return jsonify({"error": "Brak danych pogodowych"}), 400
+
 
     df = pd.DataFrame(all_weather_data)
     df['date'] = pd.to_datetime(df['date'])
@@ -87,6 +97,9 @@ def weather_forecast():
     forecast = model.predict(n_periods=len(test_df))
     forecast = pd.DataFrame(forecast, index=test_df.index, columns=['Prediction'])
     error = mean_squared_error(test_df, forecast)
+
+    # Konwersja indeksu na str przed zwróceniem jako JSON
+    forecast.index = forecast.index.strftime('%Y-%m-%d')
     
     result = {
         'Test Mean Squared Error': error,
@@ -96,4 +109,4 @@ def weather_forecast():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
