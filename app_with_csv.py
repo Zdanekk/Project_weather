@@ -3,10 +3,19 @@ import pandas as pd
 from datetime import datetime
 import pmdarima as pm
 from sklearn.metrics import mean_squared_error
+import os
 
 app = Flask(__name__)
 
-df = pd.read_csv("../data/weather_data.csv")
+# Sprawdź, czy plik istnieje lokalnie
+local_file_path = 'data/weather_data.csv'
+if os.path.isfile(local_file_path):
+    file_path = local_file_path
+else:
+    # Jeśli plik nie istnieje lokalnie, załóżmy, że działa to w kontenerze Docker
+    file_path = '/app/Data/weather_data.csv'
+
+df = pd.read_csv(file_path)
 
 @app.route('/weather_forecast', methods=['GET'])
 def weather_forecast():
@@ -38,4 +47,5 @@ def weather_forecast():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5005)
+    app.run(debug=True, host='0.0.0.0', port=5001)
+
