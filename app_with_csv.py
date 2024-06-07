@@ -18,20 +18,18 @@ except FileNotFoundError:
     df = None
     app.logger.debug(f"Plik {file_path} nie został znaleziony.")
 
+df['date'] = pd.to_datetime(df['date'])
+df.set_index('date', inplace=True)
+df['avgtempC'] = df['avgtempC'].astype(int)
+temp_df = df['avgtempC']
+train_df = temp_df['2018':'2022'].resample('M').mean()
+test_df = temp_df['2023':'2024'].resample('M').mean()
+model = pm.auto_arima(train_df, seasonal=True, m=12)
+model.fit(train_df)
 
 @app.route('/weather_forecast', methods=['GET'])
 def weather_forecast():
-    try:   
-        df['date'] = pd.to_datetime(df['date'])
-        df.set_index('date', inplace=True)
-        df['avgtempC'] = df['avgtempC'].astype(int)
-        
-        temp_df = df['avgtempC']
-        train_df = temp_df['2018':'2022'].resample('M').mean()
-        test_df = temp_df['2023':'2024'].resample('M').mean()
-        
-        model = pm.auto_arima(train_df, seasonal=True, m=12)
-        model.fit(train_df)
+    try:             
         forecast = model.predict(n_periods=len(test_df))
         forecast = pd.DataFrame(forecast, index=test_df.index, columns=['Prediction'])
         error = mean_squared_error(test_df, forecast)
