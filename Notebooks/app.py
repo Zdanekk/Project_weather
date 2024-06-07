@@ -7,6 +7,9 @@ from sklearn.metrics import mean_squared_error
 
 app = Flask(__name__)
 
+api_key = '5865dd89353e4ac199861112240706'
+location = 'London'
+
 def generate_weather_api_urls(api_key, location, years_back=6):
     base_url = "http://api.worldweatheronline.com/premium/v1/past-weather.ashx"
     urls = []
@@ -39,21 +42,11 @@ def extract_weather_data(weather_data):
     
     for day in weather_data:
         date = day["date"]
-        maxtempC = day["maxtempC"]
-        mintempC = day["mintempC"]
         avgtempC = day["avgtempC"]
-        sunHour = day["sunHour"]
-        humidity = day["hourly"][0]["humidity"]
-        pressure = day["hourly"][0]["pressure"]
-        
+
         extracted_data.append({
             "date": date,
-            "maxtempC": maxtempC,
-            "mintempC": mintempC,
-            "avgtempC": avgtempC,
-            "sunHour": sunHour,
-            "humidity": humidity,
-            "pressure": pressure
+            "avgtempC": avgtempC
         })
     
     return extracted_data
@@ -61,28 +54,16 @@ def extract_weather_data(weather_data):
 
 @app.route('/weather_forecast', methods=['GET'])
 def weather_forecast():    
-    api_key = request.args.get('api_key', '4597174352ee463084a193409241305')
-    location = request.args.get('location', 'London')
-
     urls = generate_weather_api_urls(api_key, location)
     all_weather_data = []
 
     for url in urls:
         response = requests.get(url)
         data = response.json()
-        
-        # Sprawdzenie, czy odpowiedź zawiera klucz 'weather'
-        if 'data' in data and 'weather' in data['data']:
-            weather_data = data["data"]["weather"]
-            month_weather_data = extract_weather_data(weather_data)
-            all_weather_data.extend(month_weather_data)
-        else:
-            return jsonify({"error": "Błąd w odpowiedzi API dla URL: {}".format(url)}), 400
-
-    if not all_weather_data:
-        return jsonify({"error": "Brak danych pogodowych"}), 400
-
-
+        weather_data = data["data"]["weather"]
+        month_weather_data = extract_weather_data(weather_data)
+        all_weather_data.extend(month_weather_data)
+    
     df = pd.DataFrame(all_weather_data)
     df['date'] = pd.to_datetime(df['date'])
     df.set_index('date', inplace=True)
@@ -98,7 +79,6 @@ def weather_forecast():
     forecast = pd.DataFrame(forecast, index=test_df.index, columns=['Prediction'])
     error = mean_squared_error(test_df, forecast)
 
-    # Konwersja indeksu na str przed zwróceniem jako JSON
     forecast.index = forecast.index.strftime('%Y-%m-%d')
     
     result = {
