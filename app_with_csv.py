@@ -4,18 +4,20 @@ from datetime import datetime
 import pmdarima as pm
 from sklearn.metrics import mean_squared_error
 import os
+import logging
 
 app = Flask(__name__)
 
-# Sprawdź, czy plik istnieje lokalnie
-local_file_path = 'data/weather_data.csv'
-if os.path.isfile(local_file_path):
-    file_path = local_file_path
-else:
-    # Jeśli plik nie istnieje lokalnie, załóżmy, że działa to w kontenerze Docker
-    file_path = '/app/Data/weather_data.csv'
+logging.basicConfig(level=logging.DEBUG)
 
-df = pd.read_csv(file_path)
+file_path = os.path.join('Data', 'weather_data.csv')
+
+try:
+    df = pd.read_csv(file_path)
+except FileNotFoundError:
+    df = None
+    app.logger.debug(f"Plik {file_path} nie został znaleziony.")
+
 
 @app.route('/weather_forecast', methods=['GET'])
 def weather_forecast():
