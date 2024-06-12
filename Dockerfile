@@ -1,10 +1,13 @@
 FROM python:3.11-slim
 
+RUN python3 -m venv .venv
+
 WORKDIR /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install Flask pandas pmdarima scikit-learn markupsafe==2.0.1
 
-COPY requirements.txt .
+COPY . .
+COPY Models/weather_forecast_model.pkl /app/Models/
 
 EXPOSE 5001
 

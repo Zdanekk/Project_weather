@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 logging.basicConfig(level=logging.DEBUG)
 
-# Wczytujemy dane
+# Wczytywanie danych
 file_path = os.path.join('Data', 'weather_data.csv')
 df = pd.read_csv(file_path)
 df['date'] = pd.to_datetime(df['date'])
@@ -21,8 +21,8 @@ df['avgtempC'] = df['avgtempC'].astype(int)
 temp_df = df['avgtempC']
 test_df = temp_df['2023':'2024'].resample('M').mean()
 
-# Wczytujemy wyuczony model
-model_file_path = os.path.join('models', 'weather_forecast_model.pkl')
+# Wczytywanie modelu
+model_file_path = '/app/Models/weather_forecast_model.pkl'
 with open(model_file_path, 'rb') as model_file:
     model = pickle.load(model_file)
 app.logger.debug(f"Model wczytany z {model_file_path}")
