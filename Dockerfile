@@ -1,10 +1,10 @@
-FROM python:3.11
+FROM python:3.11-slim
 
 WORKDIR /app
 
-RUN pip install Flask markupsafe pandas pmdarima
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY requirements.txt .
 
 EXPOSE 5001
 

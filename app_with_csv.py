@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import pandas as pd
 from datetime import datetime
 import pmdarima as pm
@@ -32,16 +32,15 @@ app.logger.debug(f"Model wczytany z {model_file_path}")
 def weather_forecast():          
         forecast = model.predict(n_periods=len(test_df))
         forecast = pd.DataFrame(forecast, index=test_df.index, columns=['Prediction'])
+
         error = mean_squared_error(test_df, forecast)
         
         forecast.index = forecast.index.strftime('%Y-%m-%d')
         
-        result = {
-            'Test Mean Squared Error': error,
-            'Forecast': forecast.to_dict(),
-        }
-        
-        return jsonify(result)
+        forecast_dict = {date: {'Prediction': row['Prediction']} for date, row in forecast.iterrows()}
+        app.logger.debug(f"Restructured Forecast dictionary: {forecast_dict}")
+    
+        return render_template('forecast.html', error=error, forecast=forecast_dict)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
