@@ -39,11 +39,24 @@ Konkretniej model ARIMA prognozuje szeregi czasowe, które sa danymi rejestrowan
 W celu analizy naszych danych wykorzystujemy bibliotekę "pmdarima" i zawartą w niej funkcję "pm.auto_arima()", gdzie zmienna m przyjmuje stałą wartość równą 12. Co wskazuje na nasz zamiar prognozowania pogody po miesiącach.
 
 ## Aplikacja :iphone:
+
 ### Wyniki :1st_place_medal:
 
 
 ### Opis działania API :lab_coat:
+Aplikacja zaczyna się od importowania potrzebnych bibliotek i utworzenia instancji aplikacji Flask. Następnie definiuje klucz API i lokalizację, dla której będą pobierane dane pogodowe, w tym przypadku Londyn.
 
+Funkcja generate_weather_api_urls tworzy listę URLi do API pogodowego dla ostatnich sześciu lat, generując jeden URL na każdy miesiąc w roku. Każdy URL zawiera dane dotyczące średnich temperatur dla określonego miesiąca.
+
+Po wygenerowaniu URLi, funkcja extract_weather_data wyciąga daty i średnie temperatury z odpowiedzi API i zapisuje je w odpowiednim formacie.
+
+Główny endpoint aplikacji /weather_forecast obsługuje żądania GET. Po wywołaniu tego endpointu, generowane są URL-e do API, a następnie pobierane są dane pogodowe. Dane te są przetwarzane i zapisywane w DataFrame z Pandas, gdzie daty są ustawiane jako indeks, a średnie temperatury są konwertowane na liczby całkowite.
+
+Dane są następnie dzielone na zbiór treningowy (dane z lat 2018-2022) i testowy (dane z lat 2023-2024), agregowane na poziomie miesięcznym. Model ARIMA jest tworzony i dopasowywany do danych treningowych. Model ten jest następnie używany do przewidywania średnich temperatur na okres testowy.
+
+Prognozy są zapisywane w DataFrame i indeksowane odpowiednimi datami. Obliczany jest błąd średniokwadratowy (MSE) między rzeczywistymi a przewidywanymi wartościami. Wyniki, w tym prognozy i MSE, są zwracane w formacie JSON poprzez jsonify.
+
+Aplikacja jest uruchamiana na serwerze Flask na porcie 5001 w trybie debugowania, co umożliwia łatwe testowanie i rozwijanie kodu. W ten sposób, kod ten pobiera dane pogodowe, przetwarza je, buduje model prognostyczny i zwraca wyniki jako JSON poprzez endpoint /weather_forecast.
 
 ## Dyskusja :lips:
 
