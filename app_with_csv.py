@@ -2,7 +2,7 @@ from flask import Flask, jsonify, render_template
 import pandas as pd
 from datetime import datetime
 from sklearn.metrics import mean_squared_error
-#import pmdarima as pm
+import pmdarima as pm
 import os
 import logging
 import pickle
@@ -19,13 +19,11 @@ df.set_index('date', inplace=True)
 df['avgtempC'] = df['avgtempC'].astype(int)
 temp_df = df['avgtempC']
 test_df = temp_df['2023':'2024'].resample('M').mean()
-
 # Wczytywanie modelu
-model_file_path = os.path.join('Models','weather_forecast_model.pkl')
+model_file_path = '/app/Models/weather_forecast_model.pkl'
 with open(model_file_path, 'rb') as model_file:
     model = pickle.load(model_file)
 app.logger.debug(f"Model wczytany z {model_file_path}")
-
 
 @app.route('/weather_forecast', methods=['GET'])
 def weather_forecast():          

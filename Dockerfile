@@ -4,10 +4,9 @@ RUN python3 -m venv .venv
 
 WORKDIR /app
 
-RUN pip install Flask pandas pmdarima scikit-learn markupsafe==2.0.1
+RUN pip install Flask pandas pmdarima scikit-learn markupsafe==2.0.1 numpy==1.26.4
 
 COPY . .
-COPY Models/weather_forecast_model.pkl /app/Models/
 
 EXPOSE 5001
 
